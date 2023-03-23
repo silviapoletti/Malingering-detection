@@ -61,6 +61,14 @@ The most relevant features for classification are item 9 and 14 both belonging t
 For all the items except items 1, 4 and 5, a high score (red) corresponds to a high probability to be classified as dishonest, while a low score (blue) corresponds to a high probability to be classified as honest.
 The majority of the items has high absolute values of SHAP, with a more clear and strong distinction between honest and dishonest subjects, resulting in a very good classification accuracy. Therefore, the SHAP value is useful for distinguishing between the two classes quite easily for the majority of the questions.
 
+The following partial dependence plot on the left indicate that a high score to item 9 combined with a high score to item 14 imply a probability higher than 60% for a subject to be classified as dishonest. While a low score in both the items implies the opposite. The other plot on the right shows that item 9 is much more relevant in predicting the dishonest than item 5: we could classify an individual as dishonest with probability higher than 55% if their score in item 9 is 4 or 5, and the score of item 5 would not affect our decision.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and14.png"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and5.png"\>
+</p>
+
+
 
 
 * [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
