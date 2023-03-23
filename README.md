@@ -41,7 +41,14 @@ In the following plots, the possible scores that a subject can give to an item a
 
 Therefore, the probability of beeing dishonest given a high score to item 14 is very high, as well as the probability of beeing honest given a low score. On the other hand, for item 5, whatever the answer is, the subjects are more or less equally likely to be honest and dishonest.
 
-* [3 -  Classification](#scrollTo=KIhvkK6UFV0-&line=1&uniqifier=1)
+# Classification between honest and dishonest subjects
+
+We used several classification models, namely as KNN, Logistic Regression, XGBoost, Decision Tree and Random Forest. In addition, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations), that is an approach derived from game theory to explain the output of any machine learning model, and Partial Dependence Plots to show the marginal effect that one or two features have on the predicted outcome of a machine learning model.
+
+Since our dataset is very small, instead of simply using some fixed train and a test set, we used K-fold cross-validation to evaluate the models, with $K=10$.
+  
+KNN reaches the best performance of 96% of accuracy. The worst performing model is Decision Tree with an accuracy of 91%, however it is the more interpretable one.
+
     * [3.1 - K-Nearest Neighbors](#scrollTo=8OWvApzMcrNn&line=1&uniqifier=1)
     * [3.2 - Logistic Regression](#scrollTo=9EuHI1jDOY_s&line=1&uniqifier=1)
     * [3.3 - XGBoost](#scrollTo=VgRCq1xK1ret&line=1&uniqifier=1)
