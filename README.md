@@ -24,12 +24,14 @@ Items 9, 15 and 19 are in the top-6 lowest average scores of honest subjects and
    <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/overlapping_density_plots.png" width="40%"/>
 </p>
 
+The honest and dishonest answers are uncorrelated both at item level, because the anwers to an item in the honest condition are not correlated with the answers to the same item in the dishonest condition. Indeed, the correlation matrix is as follows:
 
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/correlation_matrix.png" width="40%"/>
+</p>
 
+The correlation at subject level, i.e. how much the anwers of a subject in the honest condition are correlated with the answers of the same subject in the dishonest condition, is only 0.1. Therefore, we can expect that the reconstruction of the honest subject from the fake ones is a very difficult task.
 
-    * [2.1 - Changed answers in the expected direction](#scrollTo=6bG379Dk8Et1&line=1&uniqifier=1)
-    * [2.2 - Data visualization](#scrollTo=B8u972Lc4QB4&line=1&uniqifier=1)
-    * [2.3 - Data correlation](#scrollTo=gwvwTnN37xrG&line=1&uniqifier=1)
     * [2.4 - Conditional expectation](#scrollTo=5Zd2QGGAtvZB&line=1&uniqifier=1)
     * [2.5 - IES-R Subscales](#scrollTo=n9WTS7bZlURR&line=1&uniqifier=1)
       * [2.5.1 - Changed answers in the expected direction](#scrollTo=fkDtMR0AiVvh&line=1&uniqifier=1)
