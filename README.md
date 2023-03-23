@@ -77,8 +77,15 @@ Blue items indicate a "positive" influence on the final decision, in the directi
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
 </p>
 
+The misclassification is interesting: a low score given in items 1 and 3 is correctly interpreted by the model as an indicator that the subject is dishonest. However all the low values given in the other items give more relevance to the hypothesis that the subject is honest.
 
+Dimensionality reduction with t-SNE works pretty well for classification: the new 2D data remains informative despite their dimension and can make the accuracy grow.
 
+Overall, we can see that just one feature (item 9) is enough to reach a satisfactory accuracy, but the best performances are obtained with at least 4 features (chosen among the one having the highest feature importance).
+
+In conclusion, the classification accuracy increases to 96% with the use of four engineered features, namely the subject's mean score for the three subclasses and the IES-R score, defined as the sum of all the scores given by the subject.
+
+# Lie detection
 
 * [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
     * [4.1 - TF-IDF](#scrollTo=uGR1ITXybtfG&line=14&uniqifier=1)
