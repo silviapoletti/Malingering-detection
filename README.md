@@ -35,8 +35,8 @@ The correlation at subject level, i.e. how much the anwers of a subject in the h
 In the following plots, the possible scores that a subject can give to an item are reported in the x-axis. The green bars are the histograms reporting the frequency of a given answer to a given item. The numbers in the dark rectangles are in the range $\[0, 1\]$ and correspond to the conditional probability to be dishonest given a certain answer.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item14.png" width="45%"/>
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item5.png" width="45%"/>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item14.png" width="47%"/>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item5.png" width="47%"/>
 </p>
 
 Therefore, the probability of beeing dishonest given a high score to item 14 is very high, as well as the probability of beeing honest given a low score. On the other hand, for item 5, whatever the answer is, the subjects are more or less equally likely to be honest and dishonest.
@@ -47,16 +47,15 @@ We used several classification models, namely as KNN, Logistic Regression, XGBoo
 
 Since our dataset is very small, instead of simply using some fixed train and a test set, we used K-fold cross-validation to evaluate the models, with $K=10$.
   
-KNN reaches the best performance of 96% of accuracy. The worst performing model is Decision Tree with an accuracy of 91%, however it is the more interpretable one.
+KNN reaches the best performance of 96% of accuracy. The worst performing model is Decision Tree with an accuracy of 91%, however it is the most interpretable one.
 
-    * [3.1 - K-Nearest Neighbors](#scrollTo=8OWvApzMcrNn&line=1&uniqifier=1)
-    * [3.2 - Logistic Regression](#scrollTo=9EuHI1jDOY_s&line=1&uniqifier=1)
-    * [3.3 - XGBoost](#scrollTo=VgRCq1xK1ret&line=1&uniqifier=1)
-    * [3.4 - Decision Tree](#scrollTo=ccchgQ15fqiD&line=1&uniqifier=1)
-    * [3.5 - Random Forest](#scrollTo=uM3cdRfBi_8Y&line=1&uniqifier=1)
-      * [3.5.1 - Partial Dependence Plots](#scrollTo=Z9-0mKejmwfM&line=1&uniqifier=1)
-    * [3.6 - Model explanation](#scrollTo=PbOvefY8rNy4&line=1&uniqifier=1)
-    * [3.7 - Dimensionality reduction and engineered features](#scrollTo=juSh4sXrLf7u&line=2&uniqifier=1)
+The following plots represent the feature importance ranking (left) and the SHAP scores (right) based on the fitted Random Forest model. 
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item14.png" width="47%"/>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item5.png" width="47%"/>
+</p>
+
 * [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
     * [4.1 - TF-IDF](#scrollTo=uGR1ITXybtfG&line=14&uniqifier=1)
       * [4.1.1 - Threshold validation](#scrollTo=hMgdmRtL0gwH&line=1&uniqifier=1)
