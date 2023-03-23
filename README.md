@@ -73,6 +73,9 @@ Blue items indicate a "positive" influence on the final decision, in the directi
 - The bigger the length of the "thick arrows", the greater the importance of the corresponding item in the decision making;
 - The closer the "thick arrows" to the prediction, the greater the importance of the corresponding item in the decision making.
 
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png"\>
+</p>
 
 
 
