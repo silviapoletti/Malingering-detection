@@ -52,8 +52,8 @@ KNN reaches the best performance of 96% of accuracy. The worst performing model 
 The following plots represent the feature importance ranking (left) and the SHAP scores (right) based on the fitted Random Forest model. 
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/ec20102b3cb26eeb549c7a7b346ec239d4ede797/plots/random_forest_ranking.png" width="50%"/>
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/ec20102b3cb26eeb549c7a7b346ec239d4ede797/plots/random_forest_shap.png" width="50"/>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/ec20102b3cb26eeb549c7a7b346ec239d4ede797/plots/random_forest_ranking.png" width="40%"/>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/ec20102b3cb26eeb549c7a7b346ec239d4ede797/plots/random_forest_shap.png" width="40%"/>
 </p>
 
 * [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
