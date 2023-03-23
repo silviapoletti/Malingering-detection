@@ -69,7 +69,9 @@ The following partial dependence plot on the left indicate that a high score to 
 </p>
 
 We can also pick some samples in the dataset and apply SHAP to understand how each item contributed (with its importance) to the classification of the samples.  
-Blue items indicate a "positive" influence on the final decision, in the direction of predicting the subject as honest, while red items indicate a "negative" influence on the final decision, in the direction of predicting the subject as dishonest. 
+Blue items indicate a "positive" influence on the final decision, in the direction of predicting the subject as honest, while red items indicate a "negative" influence on the final decision, in the direction of predicting the subject as dishonest. Note that:
+- The bigger the length of the "thick arrows", the greater the importance of the corresponding item in the decision making;
+- The closer the "thick arrows" to the prediction, the greater the importance of the corresponding item in the decision making.
 
 
 
