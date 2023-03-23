@@ -56,6 +56,13 @@ The following plots represent the feature importance ranking (left) and the SHAP
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/ec20102b3cb26eeb549c7a7b346ec239d4ede797/plots/random_forest_shap.png" width="40%"/>
 </p>
 
+The most relevant features for classification are item 9 and 14 both belonging to the Intrusive subscale. This means that the imagery associated with the traumatic event and nightmares is probably decisive for the distinction between honest and dishonest subjects, because liars tend to exaggerate more the symptoms described by this subscale.
+
+For all the items except items 1, 4 and 5, a high score (red) corresponds to a high probability to be classified as dishonest, while a low score (blue) corresponds to a high probability to be classified as honest.
+The majority of the items has high absolute values of SHAP, with a more clear and strong distinction between honest and dishonest subjects, resulting in a very good classification accuracy. Therefore, the SHAP value is useful for distinguishing between the two classes quite easily for the majority of the questions.
+
+
+
 * [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
     * [4.1 - TF-IDF](#scrollTo=uGR1ITXybtfG&line=14&uniqifier=1)
       * [4.1.1 - Threshold validation](#scrollTo=hMgdmRtL0gwH&line=1&uniqifier=1)
