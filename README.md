@@ -1,9 +1,8 @@
 # Malingering detection
 
-The Impact of Event Scale  is a 22-item self-report measure that assesses subjective distress caused by traumatic events. According to this assessment measure, the core characteristics of the PSTD is the distressing oscillation between intrusion and avoidance. 
-The Impact of Event Scale Revised (IES-R) is a questionnaire divided into 3 subscales that are representative of the major symptom clusters of the Post Traumatic Stress Disorder (PTSD): Intrusion, Avoidance, Hyperarousal.
+The Impact of Event Scale Revised (IES-R) is a questionnaire of 22 questions called items, divided into 3 subscales that are representative of the major symptom clusters of the Post Traumatic Stress Disorder (PTSD): Intrusion, Avoidance, Hyperarousal.
 
-The dataset contains 179 healthy controls taking the test twice. Subjects were asked to first respond honestly and then fake the PTSD symptoms. Therefore, we have to face the phenomena of "fake bad" concerning the exaggeration of a symptom or a disorder in order to obtain some gain or legal advantage.
+The dataset contains 179 healthy controls taking the test twice. Subjects were asked to first respond to the questions honestly - with a score equal to 1, 2, 3, 4 or 5 - and then fake the PTSD symptoms. Therefore, we have to face the phenomena of "fake bad" concerning the exaggeration of a symptom or a disorder in order to obtain some gain or legal advantage.
 
 The project's aims are summarized as follows:
 - Discriminate between honest and dishonest subjects;
@@ -12,13 +11,16 @@ The project's aims are summarized as follows:
 
 In the first part of the notebook we will compute some exploratory analysis in order to better understand the data we are working with. Then, we extract some peculiar characteristics of the data by means of classification models and faking detection. Finally, we use regression models to reconstruct the honest responses starting from the dishonest ones.
 
-Table of contents:
-# Table of Contents
+# Exploratory Data Analysis
 
-* [1 - Introduction](#scrollTo=Y1HVqCO_hbqh&line=1&uniqifier=1)
-    * [1.1 - IES-R Scale](#scrollTo=fb7z2zD2mAje&line=1&uniqifier=1)
-    * [1.2 - Materials and goals](#scrollTo=6kEPTvVme5Zw&line=1&uniqifier=1)
-* [2 - Exploratory Data Analysis](#scrollTo=mbwpYSfTdb7S&line=2&uniqifier=1)
+According to the instructions, the users are expected to use relatively low scores (honest responses) in the first questionnaire and then increment some of these scores in the second questionnaire, in order to fake PTSD sympthoms (dishonest responses). 
+
+The percentage of changed answers in the expected direction is pretty high, about 81%. This means that dishonest subjects don't lie in every single question, but in the majority. Therefore the dataset can be considered relevant for our project's goals.
+
+Items 9, 15 and 19 are in the top-6 lowest average scores of honest subjects and top-6 highest average scores of dishonest subjects, and therefore we could expect that those items will be the most useful to discriminate between honest and dishonest subjects: this is confirmed by looking at the density plots below showing that data for those items are almost linearly saparable.
+
+
+
     * [2.1 - Changed answers in the expected direction](#scrollTo=6bG379Dk8Et1&line=1&uniqifier=1)
     * [2.2 - Data visualization](#scrollTo=B8u972Lc4QB4&line=1&uniqifier=1)
     * [2.3 - Data correlation](#scrollTo=gwvwTnN37xrG&line=1&uniqifier=1)
