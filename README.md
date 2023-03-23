@@ -68,6 +68,10 @@ The following partial dependence plot on the left indicate that a high score to 
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and5.png"\>
 </p>
 
+We can also pick some samples in the dataset and apply SHAP to understand how each item contributed (with its importance) to the classification of the samples.  
+Blue items indicate a "positive" influence on the final decision, in the direction of predicting the subject as honest, while red items indicate a "negative" influence on the final decision, in the direction of predicting the subject as dishonest. 
+
+
 
 
 
