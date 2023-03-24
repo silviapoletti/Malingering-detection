@@ -154,15 +154,31 @@ Our approach:
 - **Ridge Regression**
 - **K-Nearest Neighbors**
 - **XGBoost**
+- **Denoising Autoencoder**: An aoutoencoder learns an efficient representation of the data, using an unsupervised learning approach. Denoising autoencoders are a specific class of autoencoders that have the aim of reconstructing the original input starting from partially corrupted data. Indeed, we can consider dishonest responses as a "noisy" or "corrupted" version of the corresponding subject's honest responses. The autoencoder is composed of two main parts: an encoder and a decoder. The encoder encodes the input into an internal representation, while the decoder reconstruct the output starting from the internal representation of the input. Since our dataset is pretty small, we used only two layers for the encoding part and two for the deconding part, to try to prevent overfitting of the training data.
 - **Denoising with Bernoulli Restricted Boltzmann Machine**: A restricted Boltzmann machine (RBM) is a generative stochastic artificial neural network that can learn a probability distribution over its set of inputs. The first step is to perform the unsupervised training to fit the Bernoulli RBM to our data with the use of persistent contrastive divergence. For implementation requirements, we will need binary data, with scores 1, 2 considered as 0 and scores 3, 4, 5 considered as 1. 
   - The raw predictions are just scores that have to be set as values 1, 2, 3, 4 or 5 according to some specific (finetuned) thresholds, corresponding to: $$\alpha_i * max(pred[subject])$$ where $\alpha_i\in (0,1)$. 
   - After applying the thresholds, we will end to have an intermediate prediction with some values set to 0. We will set those values (corresponding to the answers whose RBM score is above $\small{\alpha_i * max(pred[subject])} \, \,\forall i$, i.e. the highest RBM scores) to 1, 2, 3, 4 or 5 according to the other scores of the subject:
-    - if the prediction contains more than 20 values equal to 1, then the missing values are set to 1 as well
-    -  if the prediction contains 18-19 values equal to 1, then the missing values are set to 2
-    -  if the prediction contains 16-17 values equal to 1, then the missing values are set to 3
-    -  if the prediction contains 6-15 values equal to 1, then the missing values are set to 4
-    -  if the prediction contains 0-5 values equal to 1, then the missing values are set to 5.
+    - if the prediction contains more than 20 values equal to 1, then the missing values are set to 1 as well;
+    - if the prediction contains 18-19 values equal to 1, then the missing values are set to 2;
+    - if the prediction contains 16-17 values equal to 1, then the missing values are set to 3;
+    - if the prediction contains 6-15 values equal to 1, then the missing values are set to 4;
+    - if the prediction contains 0-5 values equal to 1, then the missing values are set to 5.
 
 This is a winning strategy because is found on the assumption that a honest subject giving all low-valued answers, would not give few but very high answers, except for misleading questions like itwem 4 or 5. Therefore, as the presence of score 1 decreases, we will set the missing values (the one that are supposed to have the greater score of the subject) to increasing values, from 1 to 5. In this way, we can say that a peculiar characteristic of our model is to capture the sudden peaks while predicting reliable low scores for the majority of the other answers. This strategy leads to one of the highest accuracy value in the reconstruction task and moreover it is based on the plausible assumption that subjects have an intern coherence when answering the questions.
-- **Denoising Autoencoder**: An aoutoencoder learns an efficient representation of the data, using an unsupervised learning approach. Denoising autoencoders are a specific class of autoencoders that have the aim of reconstructing the original input starting from partially corrupted data. Indeed, we can consider dishonest responses as a "noisy" or "corrupted" version of the corresponding subject's honest responses. The autoencoder is composed of two main parts: an encoder and a decoder. The encoder encodes the input into an internal representation, while the decoder reconstruct the output starting from the internal representation of the input. Since our dataset is pretty small, we used only two layers for the encoding part and two for the deconding part, to try to prevent overfitting of the training data.
+
+We can conclude that XGBoost is the method which obtained the highest reconstruction accuracy (51%), followed by our customized Denoising RBM (50%), KNN (37%), Denoising Autoencoder (36%), Ridge Regression (35%) and Linear Regression (35%).
+
+The next figure refers to standard errors in the reconstruction. The baseline's predictions have the greatest standard error w.r.t. the groundtruth. XGBoost appears to be the model with the highest accuracy at the reconstruction and the lowest standard error at the prediction, and the overall standard error of all the other models is not very high, almost 0.85.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="75%"\>
+</p>
+
+From the plot below we can clearly see that XGBoost and the Denoising RBM are the algorithms that reach the highest accuracy in almost all the items. The only exception is item IES-R 5, where a little bit higher accuracy is reached by the Denoising Autoencoder. The black line represents the fraction of subjects who lie in a certain item in our dataset (for example, about 90% of the subject lied when ansering to item 9). More or less, the worst performances occur when the amount of lie among the subject in a certain item is low. This is reasonable, because if the subjects don't lie there's no way for the model to understand the liars behavior and consequently reconstruct their honest responses.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="75%"\>
+</p>
+
+
 
