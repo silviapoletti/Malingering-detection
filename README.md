@@ -87,35 +87,63 @@ In conclusion, the classification accuracy increases to 96% with the use of four
 
 # Lie detection
 
-We perform anomaly detection to investigate which item response underwent faking and which not. In other words, we will detect the outliers (i.e. honest responses) among the faked answers in the second questionnaire, at item level and subject level.
+We perform anomaly detection to investigate which item response underwent faking and which not. We will approach the problem in the other way around: given a dishonest questionnaire, we'll catch those answers that are honest, i.e. that didn't change in the expected direction from the first questionnaire to the second one. In other words, we will detect the outliers (i.e. honest responses) among the faked answers in the second questionnaire, at item level and subject level.
 To find the outliers at item level we will take one specific item and consider all its corresponding answers: those answers that differ very much from the others are considered as outliers and are therefore the honest answers that the subjects gave in the dishonest condition.
 To find the outliers at subject level we will take one specific subject and consider all their answers: we then classify each answer of the subject as outlier or not, depending on the usual values that each specific item takes in the dishonest condition.
 
 We consider three strategies:
-- **Term Frequency - Inverse Document Frequency** (TF-IDF) defined as $$TF\text{-}IDF_{i,j}(s) = TF_{i,j}(s)\times IDF_i(s)$$ where $s$ is the score (taking values $1, 2, 3, 4, 5$) corresponding to item $i$ (taking values $1, \dots, 22$) and subject $j$ (taking values $1, …, 176$). 
+- **Term Frequency - Inverse Document Frequency** (TF-IDF) is defined as $$TF\text{-}IDF_{i,j}(s) = TF_{i,j}(s)\times IDF_i(s)$$ where $s$ is the score (taking values $1, 2, 3, 4, 5$) corresponding to item $i$ (taking values $1, \dots, 22$) and subject $j$ (taking values $1, …, 176$). 
   - The TF score is defined as:
 $$TF_{i,j}(s) = \frac{n_{i,j}(s)}{\text{TOTitems}}$$ where $n_{ij}(s)$ is the number of times the the subject $j$ uses the score $s$ in its answers, normalized by the total number of answers the subject gives ($\text{TOTitems} = 22$).
   - The IDF score determines the weight of rare scores across all answers in the dataset and is defined as: 
 $$IDF_i(s) = log\bigg(\frac{N}{n_i(s)} \bigg)$$ where $N = 176$ is the total number of participants and $n_i(s)$ is the number of times the score $s$ was used by other partecipants to answer item $i$. 
+- **Isolation Forest** (IF) is built on the basis of decision trees and aims to explicitly identify anomalies instead of profiling normal data points. In these trees, random partitions are created by first randomly selecting a feature and then selecting a random split value between the minimum and maximum value of the selected feature. Therefore, outliers should be identified closer to the root of the tree with fewer splits necessary than normal points. The IF anomaly score is defined as:
+$$ s(x,n) = - 2^{-\frac{E[h(x)]}{c(n)}}\in[-1,0]$$ where $h(x)$ is the path length of observation $x$, $c(n)$ is the average path length of unsuccessful search in a Binary Search Tree and $n$ is the number of external nodes. The decision making is described as follows:
+  - A score close to $-1$ indicates anomalies;
+  - A score whose absolute value is much smaller than $0.5$ indicates normal observations.
 
-- **Isolation Forest**
-- **TF-IDF revised with Isolation Forest**
+- **TF-IDF revised with Isolation Forest** is a weighted sum of the IF anomaly score and the TF-IDF score: $$ \text{CombinedScore} =  \alpha  \cdot | \text{IFScore} | + (1 - \alpha ) \cdot (1 - \text{TFIDFScore})$$ where  $\alpha, |\text{IFScore}|, \text{TFIDFScore} \in (0,1)$. Indeed, what corresponds to a honest response, i.e. an outlier, is a high absolute value of the IF anomaly score and a low value of the TF-IDF score.
+
+The best threshold for computing lie detection with TF-IDF is computed as the percentile score in the TF-IDF values distribution for each IES-R item that maximizes the accuracy while minimizing the number of wrong predictions. Here, the prediction of an outlier is considered accurate if the dishonest answer score given by a subject is lower than their honest answer score.
+We first estimate the IDF scores associated to each item considering only the answers from honest subjects, then compute the TF-IDF for all the subjects in the test set and finally determine the outliers according to the best threshold (`thr` in the figure) found.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
+</p>
+
+As we can see from the plot above, TF-IDF doesn't produce a lot of wrong prediction: for a barely good accuracy of 48.1% we have less than 2 wrong predictions, on average. The best threshold correspond to the $thr=95$ percentile.
+
+According to Isolation Forest, for most of the items including item 9 (on the left), honest responses correspond to the scores 1, 2, 3.
+Some clear exceptions are item 4 - *I felt irritable and angry* - and item 5 (on the right) - *I avoided letting myself get upset when I thought about it or was reminded of it*. Indeed liars don't think that PTSD patients would avoid negative feelings about their trauma; moreover irritability and anger are feelings that are common also for healthy subjects who tend to give high grades to that question in the honest questionnaire. The **Outlier regions plot** are based on the IF anomaly score and are as follows.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
+</p>
+
+The default threshold value for Isolation Forest is $0.5$. But, again, the best threshold for computing lie detection with Isolation Forest is computed as the value in $[0,1]$ that maximizes the accuracy while minimizing the number of wrong predictions. We first fit the IF algorithm on a train set of dishonest subjects, then we predict the outliers for all the subjects in the test set and finally determine the outliers according to the best threshold (`p` in the figure) found.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
+</p>
+
+The best threshold between accuracy and wrong predictions for the Isolation Forest is $p = 0.55$, just a little bigger than the default one $p = 0.5$. The accuracy is much higher than the one obtained with TF-IDF but the number of wrong predictions are more than twice the ones of TF-IDF with the best percentile:
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
+</p>
+
+
+In conclusion, TF-IDF revised with Isolation Forest improves the accuracy of the Isolation Forest from 73.6% to 75.7% and also improves the average number of wrong predictions from 4.1 to 3.8, as displayed below.
+
+<p align="center">
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/e3d4249e7967fb7381fff0f5d2fcd103aee839ec/plots/shap_classification.png" \>
+</p>
+
+# Reconstruction of honest responses given the fake ones
 
 
 
-In order to carry out the task we will use the TF-IDF and the Isolation Forest algorithms and then try to combine them together.
-* [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
-    * [4.1 - TF-IDF](#scrollTo=uGR1ITXybtfG&line=14&uniqifier=1)
-      * [4.1.1 - Threshold validation](#scrollTo=hMgdmRtL0gwH&line=1&uniqifier=1)
-      * [4.1.2 - Lie detection at item level](#scrollTo=I7TJd1C23c3g&line=1&uniqifier=1)
-      * [4.1.3 - Lie detection at subject level](#scrollTo=tt2b1La43x_8&line=1&uniqifier=1)
-    * [4.2 - Isolation Forest](#scrollTo=gz5H3zeirlGO)
-      * [4.2.1 - Outlier regions](#scrollTo=wz3hOMZmJnEL&line=1&uniqifier=1)
-      * [4.2.2 - Threshold validation](#scrollTo=6OfGMkg-MtF2&line=4&uniqifier=1)
-      * [4.2.3 - Lie detection at item level](#scrollTo=15we7MR2M4I5&line=1&uniqifier=1)
-      * [4.2.4 - Lie detection at subject level](#scrollTo=psIVG6cxM9UW&line=1&uniqifier=1)
-    * [4.3 - Comparison between TF-IDF and IF](#scrollTo=s7WE6NQKVVO4&line=1&uniqifier=1)
-    * [4.4 - TF-IDF revised with Isolation Forest](#scrollTo=a7o-hG3pizVd&line=13&uniqifier=1)
 * [5 - Reconstruction](#scrollTo=w3-09mOOoBaZ&line=1&uniqifier=1)
   * [5.1 - Trivial strategy (baseline)](#scrollTo=qoTDsufu5NBv)
   * [5.2 - Linear Regression](#scrollTo=RC6wtqlc0BDC&line=1&uniqifier=1)
