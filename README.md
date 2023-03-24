@@ -98,9 +98,14 @@ $$TF_{i,j}(s) = \frac{n_{i,j}(s)}{\text{TOTitems}}$$ where $n_{ij}(s)$ is the nu
   - The IDF score determines the weight of rare scores across all answers in the dataset and is defined as: 
 $$IDF_i(s) = log\bigg(\frac{N}{n_i(s)} \bigg)$$ where $N = 176$ is the total number of participants and $n_i(s)$ is the number of times the score $s$ was used by other partecipants to answer item $i$. 
 
-- **Isolation Forest** (IF) is built on the basis of decision trees and aims to explicitly identify anomalies instead of profiling normal data points. In these trees, random partitions are created by first randomly selecting a feature and then selecting a random split value between the minimum and maximum value of the selected feature. Therefore, outliers should be identified closer to the root of the tree with fewer splits necessary than normal points. The IF anomaly score is defined as 
+- **Isolation Forest** (IF) is built on the basis of decision trees and aims to explicitly identify anomalies instead of profiling normal data points. In these trees, random partitions are created by first randomly selecting a feature and then selecting a random split value between the minimum and maximum value of the selected feature. Therefore, outliers should be identified closer to the root of the tree with fewer splits necessary than normal points. The IF anomaly score is defined as $$ s(x,n) = - 2^{-\frac{E[h(x)]}{c(n)}}\in[-1,0]$$ 
 
-$$ s(x,n) = - 2^{-\frac{E[h(x)]}{c(n)}}\in[-1,0]$$ where $h(x)$ is the path length of observation $x$, $c(n)$ is the average path length of unsuccessful search in a Binary Search Tree and $n$ is the number of external nodes. The decision making is described as follows:
+
+
+
+
+
+where $h(x)$ is the path length of observation $x$, $c(n)$ is the average path length of unsuccessful search in a Binary Search Tree and $n$ is the number of external nodes. The decision making is described as follows:
    - A score close to $-1$ indicates anomalies;
    - A score whose absolute value is much smaller than $0.5$ indicates normal observations.
 
