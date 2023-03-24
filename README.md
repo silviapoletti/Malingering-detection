@@ -64,8 +64,8 @@ The majority of the items has high absolute values of SHAP, with a more clear an
 The following partial dependence plot on the left indicate that a high score to item 9 combined with a high score to item 14 imply a probability higher than 60% for a subject to be classified as dishonest. While a low score in both the items implies the opposite. The other plot on the right shows that item 9 is much more relevant in predicting the dishonest than item 5: we could classify an individual as dishonest with probability higher than 55% if their score in item 9 is 4 or 5, and the score of item 5 would not affect our decision.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and14.png"\>
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and5.png"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and14.png" weight="70%"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and5.png" weight="70%"\>
 </p>
 
 We can also pick some samples in the dataset and apply SHAP to understand how each item contributed (with its importance) to the classification of the samples.  
@@ -94,7 +94,7 @@ To find the outliers at subject level we will take one specific subject and cons
 We consider three strategies:
 - Term Frequency - Inverse Document Frequency (TF-IDF) defined as $$TF\text{-}IDF_{i,j}(s) = TF_{i,j}(s)\times IDF_i(s)$$ where $s$ is the score (taking values $1, 2, 3, 4, 5$) corresponding to item $i$ (taking values $1, \dots, 22$) and subject $j$ (taking values $1, …, 176$). 
   - The TF score is defined as:
-$$TF_{i,j}(s) = \frac{n_{i,j}(s)}{\#items}$$ where $n_{ij}(s)$ is the number of times the the subject $j$ uses the score $s$ in its answers, normalized by the total number of answers the subject gives ($\#items = 22$).
+$$TF_{i,j}(s) = \frac{n_{i,j}(s)}{tot_items}$$ where $n_{ij}(s)$ is the number of times the the subject $j$ uses the score $s$ in its answers, normalized by the total number of answers the subject gives ($\tot_items = 22$).
   - The IDF score determines the weight of rare scores across all answers in the dataset and is defined as: 
 $$IDF_i(s) = log\bigg(\frac{N}{n_i(s)} \bigg)$$ where $N = 176$ is the total number of participants and $n_i(s)$ is the number of times the score $s$ was used by other partecipants to answer item $i$. 
 
