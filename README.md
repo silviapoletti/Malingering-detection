@@ -105,7 +105,7 @@ The best threshold for computing lie detection with TF-IDF is computed as the pe
 We first estimate the IDF scores associated to each item considering only the answers from honest subjects, then compute the TF-IDF for all the subjects in the test set and finally determine the outliers according to the best threshold (`thr` in the figure) found.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cc0c0ad66d5ae4c7573e5953d897a61fca8a26b4/plots/tfidf_tradeoff.png" width="80%"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/cc0c0ad66d5ae4c7573e5953d897a61fca8a26b4/plots/tfidf_tradeoff.png" width="60%"\>
 </p>
 
 As we can see from the plot above, TF-IDF doesn't produce a lot of wrong prediction: for a barely good accuracy of 48.1% we have less than 2 wrong predictions, on average. The best threshold correspond to the $thr=95$ percentile.
@@ -114,27 +114,26 @@ According to Isolation Forest, for most of the items including item 9 (on the le
 Some clear exceptions are item 4 - *I felt irritable and angry* - and item 5 (on the right) - *I avoided letting myself get upset when I thought about it or was reminded of it*. Indeed liars don't think that PTSD patients would avoid negative feelings about their trauma; moreover irritability and anger are feelings that are common also for healthy subjects who tend to give high grades to that question in the honest questionnaire. The **Outlier regions plot** are based on the IF anomaly score and are as follows.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7b76e5ac289594d60e63fb6984b67ba8ce9d054e/plots/outlier_region_9.png" width="60%"\>
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7b76e5ac289594d60e63fb6984b67ba8ce9d054e/plots/outlier_region_5.png" width="60%"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7b76e5ac289594d60e63fb6984b67ba8ce9d054e/plots/outlier_region_9.png" width="40%"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7b76e5ac289594d60e63fb6984b67ba8ce9d054e/plots/outlier_region_5.png" width="40%"\>
 </p>
 
 The default threshold value for Isolation Forest is $0.5$. But, again, the best threshold for computing lie detection with Isolation Forest is computed as the value in $[0,1]$ that maximizes the accuracy while minimizing the number of wrong predictions. We first fit the IF algorithm on a train set of dishonest subjects, then we predict the outliers for all the subjects in the test set and finally determine the outliers according to the best threshold (`p` in the figure) found.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/if_tradeoff.png" width="80%\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/if_tradeoff.png" width="60%"\>
 </p>
 
 The best threshold between accuracy and wrong predictions for the Isolation Forest is $p = 0.55$, just a little bigger than the default one $p = 0.5$. The accuracy is much higher than the one obtained with TF-IDF but the number of wrong predictions are more than twice the ones of TF-IDF with the best percentile:
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/if_tfidf_wrong_predictions.png" width="80%\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/if_tfidf_wrong_predictions.png" width="60%"\>
 </p>
-
 
 In conclusion, TF-IDF revised with Isolation Forest improves the accuracy of the Isolation Forest from 73.6% to 75.7% and also improves the average number of wrong predictions from 4.1 to 3.8, as displayed below.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="80%\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="60%"\>
 </p>
 
 # Reconstruction of honest responses given the fake ones
