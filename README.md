@@ -43,7 +43,14 @@ Therefore, the probability of beeing dishonest given a high score to item 14 is 
 
 # Classification between honest and dishonest subjects
 
-We used several classification models, namely as KNN, Logistic Regression, XGBoost, Decision Tree and Random Forest. In addition, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations), that is an approach derived from game theory to explain the output of any machine learning model, and Partial Dependence Plots to show the marginal effect that one or two features have on the predicted outcome of a machine learning model.
+We used several classification models, namely:
+- **K-Nearest Neighbors** (K-NN)
+- **Logistic Regression**
+- **XGBoost**
+- **Decision Tree**
+- **Random Forest**. 
+
+In addition, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations), that is an approach derived from game theory to explain the output of any machine learning model, and Partial Dependence Plots to show the marginal effect that one or two features have on the predicted outcome of a machine learning model.
 
 Since our dataset is very small, instead of simply using some fixed train and a test set, we used K-fold cross-validation to evaluate the models, with $K=10$.
   
@@ -130,7 +137,7 @@ The best threshold between accuracy and wrong predictions for the Isolation Fore
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/if_tfidf_wrong_predictions.png" width="75%"\>
 </p>
 
-In conclusion, for the best $threshold=0.47$, the TF-IDF revised with Isolation Forest improves the accuracy of the Isolation Forest from 73.6% to 75.7% and also improves the average number of wrong predictions from 4.1 to 3.8. The following shows the performance of the model for various thresholds ((`threshold` in the figure)).
+In conclusion, for the best $threshold=0.47$, the TF-IDF revised with Isolation Forest improves the accuracy of the Isolation Forest from 73.6% to 75.7% and also improves the average number of wrong predictions from 4.1 to 3.8. The following shows the performance of the model for various thresholds (`threshold` in the figure).
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="75%"\>
@@ -138,16 +145,23 @@ In conclusion, for the best $threshold=0.47$, the TF-IDF revised with Isolation 
 
 # Reconstruction of honest responses given the fake ones
 
+We will perform the reconstruction of the honest answers starting from the dishonest ones. As we have seen in the Exploratory Data Analysis section, this is a very hard task, since it seems that the responses of the same subject in the honest and dishonest conditions are not correlated.
+Moreover, the dishonest subjects' responses are more correletad than the one of the honest subjects, meaning that there may be exist a pattern for liars; hovever this correlation is still low and therefore we could argue that the dishonest subjects lie in many different ways and this makes the reconstruction task even more difficult. Indeed, we have seen that depending on the subject, the number of changed answer in the expected direction (exaggerating the symphtoms) varies a lot.
 
+Our approach:
+- **Trivial strategy** (baseline): Subtract to each subject’s fake response the average of the difference, across all subjects, between fake and honest responses.
+- **Linear regression**
+- **Ridge Regression**
+- **K-Nearest Neighbors**
+- **XGBoost**
+- **Denoising with Bernoulli Restricted Boltzmann Machine**: A restricted Boltzmann machine (RBM) is a generative stochastic artificial neural network that can learn a probability distribution over its set of inputs. The first step is to perform the unsupervised training to fit the Bernoulli RBM to our data with the use of persistent contrastive divergence. For implementation requirements, we will need binary data, with scores 1, 2 considered as 0 and scores 3, 4, 5 considered as 1. 
+  - The raw predictions are just scores that have to be set as values 1, 2, 3, 4 or 5 according to some specific (finetuned) thresholds, corresponding to: $$\alpha_i * max(pred[subject])$$ where $\alpha_i\in (0,1)$. 
+  - After applying the thresholds, we will end to have an intermediate prediction with some values set to 0. We will set those values (corresponding to the answers whose RBM score is above $\small{\alpha_i * max(pred[subject])} \, \,\forall i$, i.e. the highest RBM scores) to 1, 2, 3, 4 or 5 according to the other scores of the subject:
+    - if the prediction contains more than 20 values equal to 1, then the missing values are set to 1 as well
+    -  if the prediction contains 18-19 values equal to 1, then the missing values are set to 2
+    -  if the prediction contains 16-17 values equal to 1, then the missing values are set to 3
+    -  if the prediction contains 6-15 values equal to 1, then the missing values are set to 4
+    -  if the prediction contains 0-5 values equal to 1, then the missing values are set to 5.
+This is a winning strategy because is found on the assumption that a honest subject giving all low-valued answers, would not give few but very high answers, except for misleading questions like itwem 4 or 5. Therefore, as the presence of score 1 decreases, we will set the missing values (the one that are supposed to have the greater score of the subject) to increasing values, from 1 to 5. In this way, we can say that a peculiar characteristic of our model is to capture the sudden peaks while predicting reliable low scores for the majority of the other answers. This strategy leads to one of the highest accuracy value in the reconstruction task and moreover it is based on the plausible assumption that subjects have an intern coherence when answering the questions.
+- **Denoising Autoencoder**: An aoutoencoder learns an efficient representation of the data, using an unsupervised learning approach. Denoising autoencoders are a specific class of autoencoders that have the aim of reconstructing the original input starting from partially corrupted data. Indeed, we can consider dishonest responses as a "noisy" or "corrupted" version of the corresponding subject's honest responses. The autoencoder is composed of two main parts: an encoder and a decoder. The encoder encodes the input into an internal representation, while the decoder reconstruct the output starting from the internal representation of the input. Since our dataset is pretty small, we used only two layers for the encoding part and two for the deconding part, to try to prevent overfitting of the training data.
 
-* [5 - Reconstruction](#scrollTo=w3-09mOOoBaZ&line=1&uniqifier=1)
-  * [5.1 - Trivial strategy (baseline)](#scrollTo=qoTDsufu5NBv)
-  * [5.2 - Linear Regression](#scrollTo=RC6wtqlc0BDC&line=1&uniqifier=1)
-  * [5.3 - Ridge Regression](#scrollTo=LSBHfXKHuuKb&line=1&uniqifier=1)
-  * [5.4 - K-Nearest Neighbors](#scrollTo=OEanfL374WTt&line=1&uniqifier=1)
-  * [5.5 - XGBoost](#scrollTo=LTMEcsmZZgJU&line=1&uniqifier=1)
-  * [5.6 - Denoising with Restricted Boltzmann Machines](#scrollTo=a4_7twm_AA4q)
-  * [5.7 - Denoising Autoencoder](#scrollTo=gfU-X2TAf0hy)
-  * [5.8 - LSTM Autoencoder](#scrollTo=-uz4a1uD2zqb)
-  * [5.9 - Final comparison](#scrollTo=4aAEG4Ak03ca&line=1&uniqifier=1)
-* [6 - Conclusions](#scrollTo=I_KM4XL8EZtF)
