@@ -17,14 +17,14 @@ According to the instructions, the users are expected to use relatively low scor
 
 The percentage of changed answers in the expected direction is pretty high, about 81%. This means that dishonest subjects don't lie in every single question, but in the majority. Therefore the dataset can be considered relevant for our project's goals.
 
-Items 9, 15 and 19 are in the top-6 lowest average scores of honest subjects and top-6 highest average scores of dishonest subjects, and therefore we could expect that those items will be the most useful to discriminate between honest and dishonest subjects: this is confirmed by looking at the density plots below showing that data for those items are almost linearly saparable. On the contrary, items 4 and 5 show an opposite behavior and therefore are expect to be the most misleading for discriminating between honest and dishonest subjects. This is confirmed by the overlapping density plots.
+Items 9, 15 and 19 are in the top-6 lowest average scores of honest subjects and top-6 highest average scores of dishonest subjects, and therefore we could expect that those items will be the most useful to discriminate between honest and dishonest subjects: this is confirmed by looking at the **Density plots** below showing that data for those items are almost linearly saparable. On the contrary, items 4 and 5 show an opposite behavior and therefore are expect to be the most misleading for discriminating between honest and dishonest subjects. This is confirmed by the overlapping density plots.
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/separable_density_plots.png" width="40%"/>
    <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/overlapping_density_plots.png" width="40%"/>
 </p>
 
-The honest and dishonest answers are uncorrelated both at item level, because the anwers to an item in the honest condition are not correlated with the answers to the same item in the dishonest condition. Indeed, the correlation matrix is as follows:
+The honest and dishonest answers are uncorrelated both at item level, because the anwers to an item in the honest condition are not correlated with the answers to the same item in the dishonest condition. Indeed, the **Correlation matrix** is as follows:
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/correlation_matrix.png" width="50%"/>
@@ -32,7 +32,7 @@ The honest and dishonest answers are uncorrelated both at item level, because th
 
 The correlation at subject level, i.e. how much the anwers of a subject in the honest condition are correlated with the answers of the same subject in the dishonest condition, is only 0.1. Therefore, we can expect that the reconstruction of the honest subject from the fake ones is a very difficult task.
 
-In the following plots, the possible scores that a subject can give to an item are reported in the x-axis. The green bars are the histograms reporting the frequency of a given answer to a given item. The numbers in the dark rectangles are in the range $\[0, 1\]$ and correspond to the conditional probability to be dishonest given a certain answer.
+In the following **Target Plots**, the possible scores that a subject can give to an item are reported in the x-axis. The green bars are the histograms reporting the frequency of a given answer to a given item. The numbers in the dark rectangles are in the range $\[0, 1\]$ and correspond to the conditional probability to be dishonest given a certain answer.
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/f0d8f7bb5f442d91e23bd21aa28b1cef54ad34b4/plots/conditional_expectation_item14.png" width="65%"/>
@@ -49,7 +49,7 @@ Since our dataset is very small, instead of simply using some fixed train and a 
   
 KNN reaches the best performance of 96% of accuracy. The worst performing model is Decision Tree with an accuracy of 91%, however it is the most interpretable one.
 
-The following plots represent the feature importance ranking (left) and the SHAP scores (right) based on the fitted Random Forest model. 
+The following plots represent the feature importance ranking (left) and the **SHAP scores** (right) based on the fitted Random Forest model. 
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/ec20102b3cb26eeb549c7a7b346ec239d4ede797/plots/random_forest_ranking.png" width="55%"/>
@@ -61,14 +61,14 @@ The most relevant features for classification are item 9 and 14 both belonging t
 For all the items except items 1, 4 and 5, a high score (red) corresponds to a high probability to be classified as dishonest, while a low score (blue) corresponds to a high probability to be classified as honest.
 The majority of the items has high absolute values of SHAP, with a more clear and strong distinction between honest and dishonest subjects, resulting in a very good classification accuracy. Therefore, the SHAP value is useful for distinguishing between the two classes quite easily for the majority of the questions.
 
-The following partial dependence plot on the left indicate that a high score to item 9 combined with a high score to item 14 imply a probability higher than 60% for a subject to be classified as dishonest. While a low score in both the items implies the opposite. The other plot on the right shows that item 9 is much more relevant in predicting the dishonest than item 5: we could classify an individual as dishonest with probability higher than 55% if their score in item 9 is 4 or 5, and the score of item 5 would not affect our decision.
+The following **Partial dependence plot** on the left indicate that a high score to item 9 combined with a high score to item 14 imply a probability higher than 60% for a subject to be classified as dishonest. While a low score in both the items implies the opposite. The other plot on the right shows that item 9 is much more relevant in predicting the dishonest than item 5: we could classify an individual as dishonest with probability higher than 55% if their score in item 9 is 4 or 5, and the score of item 5 would not affect our decision.
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and14.png" weight="70%"\>
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/cb6bcffc2161c017a06c701b767f34e067e6d7be/plots/partial_dependence_9and5.png" weight="70%"\>
 </p>
 
-We can also pick some samples in the dataset and apply SHAP to understand how each item contributed (with its importance) to the classification of the samples.  
+We can also pick some samples in the dataset and apply **SHAP Tree explainer** to understand how each item contributed (with its importance) to the classification of the samples in the Random Forest model.  
 Blue items indicate a "positive" influence on the final decision, in the direction of predicting the subject as honest, while red items indicate a "negative" influence on the final decision, in the direction of predicting the subject as dishonest. Note that:
 - The bigger the length of the "thick arrows", the greater the importance of the corresponding item in the decision making;
 - The closer the "thick arrows" to the prediction, the greater the importance of the corresponding item in the decision making.
@@ -79,11 +79,11 @@ Blue items indicate a "positive" influence on the final decision, in the directi
 
 The misclassification is interesting: a low score given in items 1 and 3 is correctly interpreted by the model as an indicator that the subject is dishonest. However all the low values given in the other items give more relevance to the hypothesis that the subject is honest.
 
-Dimensionality reduction with t-SNE works pretty well for classification: the new 2D data remains informative despite their dimension and can make the accuracy grow.
+Dimensionality reduction with **t-Stochastic Neighbor Embetting** (t_SNE) works pretty well for classification: the new 2D data remains informative despite their dimension and can make the accuracy grow.
 
 Overall, we can see that just one feature (item 9) is enough to reach a satisfactory accuracy, but the best performances are obtained with at least 4 features (chosen among the one having the highest feature importance).
 
-In conclusion, the classification accuracy increases to 96% with the use of four engineered features, namely the subject's mean score for the three subclasses and the IES-R score, defined as the sum of all the scores given by the subject.
+In conclusion, the classification accuracy increases to 96% with the use of four **engineered features**, namely the subject's mean score for the three subclasses and the IES-R score, defined as the sum of all the scores given by the subject.
 
 # Lie detection
 
@@ -92,14 +92,14 @@ To find the outliers at item level we will take one specific item and consider a
 To find the outliers at subject level we will take one specific subject and consider all their answers: we then classify each answer of the subject as outlier or not, depending on the usual values that each specific item takes in the dishonest condition.
 
 We consider three strategies:
-- Term Frequency - Inverse Document Frequency (TF-IDF) defined as $$TF\text{-}IDF_{i,j}(s) = TF_{i,j}(s)\times IDF_i(s)$$ where $s$ is the score (taking values $1, 2, 3, 4, 5$) corresponding to item $i$ (taking values $1, \dots, 22$) and subject $j$ (taking values $1, …, 176$). 
+- **Term Frequency - Inverse Document Frequency** (TF-IDF) defined as $$TF\text{-}IDF_{i,j}(s) = TF_{i,j}(s)\times IDF_i(s)$$ where $s$ is the score (taking values $1, 2, 3, 4, 5$) corresponding to item $i$ (taking values $1, \dots, 22$) and subject $j$ (taking values $1, …, 176$). 
   - The TF score is defined as:
 $$TF_{i,j}(s) = \frac{n_{i,j}(s)}{\text{TOTitems}}$$ where $n_{ij}(s)$ is the number of times the the subject $j$ uses the score $s$ in its answers, normalized by the total number of answers the subject gives ($\text{TOTitems} = 22$).
   - The IDF score determines the weight of rare scores across all answers in the dataset and is defined as: 
 $$IDF_i(s) = log\bigg(\frac{N}{n_i(s)} \bigg)$$ where $N = 176$ is the total number of participants and $n_i(s)$ is the number of times the score $s$ was used by other partecipants to answer item $i$. 
 
-- Isolation Forest
-- TF-IDF revised with Isolation Forest
+- **Isolation Forest**
+- **TF-IDF revised with Isolation Forest**
 
 
 
