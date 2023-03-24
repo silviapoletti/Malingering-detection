@@ -87,6 +87,19 @@ In conclusion, the classification accuracy increases to 96% with the use of four
 
 # Lie detection
 
+We perform anomaly detection to investigate which item response underwent faking and which not. In other words, we will detect the outliers (i.e. honest responses) among the faked answers in the second questionnaire, at item level and subject level.
+To find the outliers at item level we will take one specific item and consider all its corresponding answers: those answers that differ very much from the others are considered as outliers and are therefore the honest answers that the subjects gave in the dishonest condition.
+To find the outliers at subject level we will take one specific subject and consider all their answers: we then classify each answer of the subject as outlier or not, depending on the usual values that each specific item takes in the dishonest condition.
+
+We consider three strategies:
+- Term Frequency - Inverse Document Frequency (TF-IDF) defined as
+  - ciao  
+- Isolation Forest
+- TF-IDF revised with Isolation Forest
+
+
+
+In order to carry out the task we will use the TF-IDF and the Isolation Forest algorithms and then try to combine them together.
 * [4 - Lie Detection](#scrollTo=OMGpjoJowgdK&line=1&uniqifier=1)
     * [4.1 - TF-IDF](#scrollTo=uGR1ITXybtfG&line=14&uniqifier=1)
       * [4.1.1 - Threshold validation](#scrollTo=hMgdmRtL0gwH&line=1&uniqifier=1)
