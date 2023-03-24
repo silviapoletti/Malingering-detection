@@ -130,7 +130,7 @@ The best threshold between accuracy and wrong predictions for the Isolation Fore
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/if_tfidf_wrong_predictions.png" width="75%"\>
 </p>
 
-In conclusion, TF-IDF revised with Isolation Forest improves the accuracy of the Isolation Forest from 73.6% to 75.7% and also improves the average number of wrong predictions from 4.1 to 3.8, as displayed below.
+In conclusion, for the best $threshold=0.47$, the TF-IDF revised with Isolation Forest improves the accuracy of the Isolation Forest from 73.6% to 75.7% and also improves the average number of wrong predictions from 4.1 to 3.8. The following shows the performance of the model for various thresholds ((`threshold` in the figure)).
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="75%"\>
