@@ -171,13 +171,13 @@ We can conclude that XGBoost is the method which obtained the highest reconstruc
 The next figure refers to standard errors in the reconstruction. The baseline's predictions have the greatest standard error w.r.t. the groundtruth. XGBoost appears to be the model with the highest accuracy at the reconstruction and the lowest standard error at the prediction, and the overall standard error of all the other models is not very high, almost 0.85.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="75%"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/01dd6860c6f9fbf98d9c3040780d6e1092e63cfc/plots/reconstruction_errors.png" width="75%"\>
 </p>
 
 From the plot below we can clearly see that XGBoost and the Denoising RBM are the algorithms that reach the highest accuracy in almost all the items. The only exception is item IES-R 5, where a little bit higher accuracy is reached by the Denoising Autoencoder. The black line represents the fraction of subjects who lie in a certain item in our dataset (for example, about 90% of the subject lied when ansering to item 9). More or less, the worst performances occur when the amount of lie among the subject in a certain item is low. This is reasonable, because if the subjects don't lie there's no way for the model to understand the liars behavior and consequently reconstruct their honest responses.
 
 <p align="center">
-  <img src="https://github.com/silviapoletti/Malingering-detection/blob/7522f36f5d8ec0decb17e31455999f2041c18cad/plots/combination_tradeoff.png" width="75%"\>
+  <img src="https://github.com/silviapoletti/Malingering-detection/blob/01dd6860c6f9fbf98d9c3040780d6e1092e63cfc/plots/reconstruction_lie_amount.png" width="75%"\>
 </p>
 
 
