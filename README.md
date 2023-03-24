@@ -92,8 +92,12 @@ To find the outliers at item level we will take one specific item and consider a
 To find the outliers at subject level we will take one specific subject and consider all their answers: we then classify each answer of the subject as outlier or not, depending on the usual values that each specific item takes in the dishonest condition.
 
 We consider three strategies:
-- Term Frequency - Inverse Document Frequency (TF-IDF) defined as
-  - ciao  
+- Term Frequency - Inverse Document Frequency (TF-IDF) defined as $$TF\text{-}IDF_{i,j}(s) = TF_{i,j}(s)\times IDF_i(s)$$ where $s$ is the score (taking values $1, 2, 3, 4, 5$) corresponding to item $i$ (taking values $1, \dots, 22$) and subject $j$ (taking values $1, …, 176$). 
+  - The TF score is defined as:
+$$TF_{i,j}(s) = \frac{n_{i,j}(s)}{\#items}$$ where $n_{ij}(s)$ is the number of times the the subject $j$ uses the score $s$ in its answers, normalized by the total number of answers the subject gives ($\#items = 22$).
+  - The IDF score determines the weight of rare scores across all answers in the dataset and is defined as: 
+$$IDF_i(s) = log\bigg(\frac{N}{n_i(s)} \bigg)$$ where $N = 176$ is the total number of participants and $n_i(s)$ is the number of times the score $s$ was used by other partecipants to answer item $i$. 
+
 - Isolation Forest
 - TF-IDF revised with Isolation Forest
 
