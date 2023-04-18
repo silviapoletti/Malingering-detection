@@ -1,6 +1,6 @@
 # Malingering detection
 
-<a target="_blank" href="https://colab.research.google.com/github/silviapoletti/Malingering-detection/blob/290934f8be8958ff2b6e05943ddaada0f160d50e/Malingering_detection_notebook.ipynb">
+<a target="_blank" href="https://colab.research.google.com/github/silviapoletti/Malingering-detection/blob/e142b9e687d54b86487ba1b22489956555164966/Malingering_detection_notebook.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
