@@ -114,7 +114,8 @@ The IF anomaly score is defined as: $$s(x,n) = - 2^{-\frac{E[h(x)]}{c(n)}} \in [
   - A score whose absolute value is much smaller than $0.5$ indicates normal observations.
 - **TF-IDF revised with Isolation Forest** is a weighted sum of the IF anomaly score and the TF-IDF score: $\text{CombinedScore} = \alpha \cdot | \text{IFScore} | + (1 - \alpha ) \cdot (1 - \text{TFIDFScore})$ 
 where 
-$\alpha, |\text{IFScore}|, \text{TFIDFScore} \in (0,1).$ Indeed, what corresponds to a honest response, i.e. an outlier, is a high absolute value of the IF anomaly score and a low value of the TF-IDF score.
+$\alpha, |\text{IFScore}|, \text{TFIDFScore} \in (0,1).$ 
+Indeed, what corresponds to a honest response, i.e. an outlier, is a high absolute value of the IF anomaly score and a low value of the TF-IDF score.
 
 The best threshold for computing lie detection with TF-IDF is computed as the percentile score in the TF-IDF values distribution for each IES-R item that maximizes the accuracy while minimizing the number of wrong predictions. Here, the prediction of an outlier is considered accurate if the dishonest answer score given by a subject is lower than their honest answer score.
 We first estimate the IDF scores associated to each item considering only the answers from honest subjects, then compute the TF-IDF for all the subjects in the test set and finally determine the outliers according to the best threshold (`thr` in the figure) found.
