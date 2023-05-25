@@ -92,7 +92,7 @@ Blue items indicate a "positive" influence on the final decision, in the directi
 
 The misclassification is interesting: a low score given in items 1 and 3 is correctly interpreted by the model as an indicator that the subject is dishonest. However all the low values given in the other items give more relevance to the hypothesis that the subject is honest.
 
-Dimensionality reduction with **t-Stochastic Neighbor Embetting** (t_SNE) works pretty well for classification: the new 2D data remains informative despite their dimension and can make the accuracy grow.
+Dimensionality reduction with **t-Stochastic Neighbor Embetting** (t-SNE) works pretty well for classification: the new 2D data remains informative despite their dimension and can make the accuracy grow.
 
 Overall, we can see that just one feature (item 9) is enough to reach a satisfactory accuracy, but the best performances are obtained with at least 4 features (chosen among the one having the highest feature importance).
 
