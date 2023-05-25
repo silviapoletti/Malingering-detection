@@ -30,7 +30,7 @@ Items 9, 15 and 19 are in the top-6 lowest average scores of honest subjects and
    <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/overlapping_density_plots.png" width="40%"/>
 </p>
 
-The honest and dishonest answers are uncorrelated both at item level, because the anwers to an item in the honest condition are not correlated with the answers to the same item in the dishonest condition. Indeed, the **Correlation matrix** is as follows:
+The honest and dishonest answers are uncorrelated both at item level, because the answers to an item in the honest condition are not correlated with the answers to the same item in the dishonest condition. Indeed, the **Correlation matrix** is as follows:
 
 <p align="center">
   <img src="https://github.com/silviapoletti/Malingering-detection/blob/51a723b352778bf52ab7d8c3e4367eb95a0717dd/plots/correlation_matrix.png" width="50%"/>
